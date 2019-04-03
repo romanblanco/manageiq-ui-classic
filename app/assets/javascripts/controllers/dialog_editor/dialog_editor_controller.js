@@ -39,6 +39,7 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'miqServic
   }
 
   function init(dialog) {
+    console.log('#init: dialog (1),', JSON.stringify(dialog));
     function translateResponderNamesToIds(dialog) {
       var dynamicFields = [];
       var allFields = [];

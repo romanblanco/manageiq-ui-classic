@@ -1,6 +1,8 @@
 ManageIQ.angular.app.service('DialogEditorHttp', ['$http', 'API', function($http, API) {
   this.loadDialog = function(id) {
-    return API.get('/api/service_dialogs/' + id + '?attributes=content,buttons,label');
+    dialog = API.get('/api/service_dialogs/' + id + '?attributes=content,buttons,label');
+    dialog.then(function(data) { console.log('#loadDialog, JSON.str..(data):', JSON.stringify(data)); })
+    return dialog;
   };
 
   this.saveDialog = function(id, action, data) {
