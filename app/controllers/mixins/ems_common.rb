@@ -38,6 +38,9 @@ module Mixins
       drop_breadcrumb(:name => @ems.name + _(" (Properties)"), :url => show_link(@ems, :display => "props"))
     end
 
+    # NOTE: (not dead)
+    #       by "show_#{custom_display_method(display)}"
+    #       in app/controllers/mixins/generic_show_mixin.rb
     def show_ems_folders
       if params[:vat]
         drop_breadcrumb(:name => @ems.name + _(" (VMs & Templates)"),
