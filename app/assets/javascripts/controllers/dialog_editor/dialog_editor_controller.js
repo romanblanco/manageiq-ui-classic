@@ -66,8 +66,11 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'miqServic
     if (requestDialogAction() === 'copy') {
       // gettext left out intentionally
       // the label will be rendered to all users in all locales as it was saved
+      dialog = _.cloneDeepWith(dialog, customizer);
       dialog.label = dialog.content[0].label = "Copy of " + dialog.label;
+      debugger;
     }
+    console.log(JSON.stringify(dialog));
 
     DialogEditor.setData(dialog);
     vm.dialog = dialog;
@@ -107,6 +110,7 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'miqServic
 
     vm.saveButtonDisabled = true;
 
+    debugger;
     // load dialog data
     if (requestDialogAction() === 'edit') {
       action = 'edit';
@@ -119,7 +123,7 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'miqServic
         },
       };
       dialogData.content.dialog_tabs = _.cloneDeepWith(DialogEditor.getDialogTabs(), customizer);
-    } else {
+    } else { // copy / new
       action = 'create';
       dialogId = '';
       dialogData = {
