@@ -837,6 +837,7 @@ module ApplicationController::MiqRequestMethods
     @edit[:new]                 = options unless @workflow_exists
     # request originated from controller
     @edit[:org_controller]      = params[:org_controller] ? params[:org_controller] : "vm"
+    binding.pry
     @edit[:wf], pre_prov_values = workflow_instance_from_vars(req)
 
     if @edit[:wf]
@@ -949,11 +950,11 @@ module ApplicationController::MiqRequestMethods
         # not already set, i.e catalogitem
         src_vm_id =
           if @edit.fetch_path(:new, :src_vm_id, 0).present?
-            @edit[:new][:src_vm_id]
+            @edit[:new][:src_vm_id].first
           elsif @src_vm_id || params[:src_vm_id] # Set vm id if pre-prov chose one
-            options[:src_vm_id] = [@src_vm_id || params[:src_vm_id].to_i]
+            options[:src_vm_id] = @src_vm_id || params[:src_vm_id].to_i
           end
-        src_vm = VmOrTemplate.where(:id => src_vm_id).first
+        src_vm = VmOrTemplate.where(:id => src_vm_id)
 
         wf_type =
           if req.try(:type) == "VmMigrateRequest"
@@ -980,6 +981,7 @@ module ApplicationController::MiqRequestMethods
       wf_type = PhysicalServerProvisionWorkflow
     end
 
+    binding.pry
     [wf_type.new(@edit[:new], current_user, options), pre_prov_values] # Return the new workflow and any pre_prov_values
   rescue => bang
     # only add this message if showing a list of Catalog items, show screen already handles this

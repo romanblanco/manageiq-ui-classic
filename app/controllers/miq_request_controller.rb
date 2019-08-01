@@ -186,6 +186,7 @@ class MiqRequestController < ApplicationController
 
   # To handle Continue button
   def prov_continue
+    binding.pry
     if params[:button] == "continue" # Continue the request from the workflow with the new options
       id = params[:id] ? params[:id] : "new"
       return unless load_edit("prov_edit__#{id}", "show_list")
